@@ -1,0 +1,92 @@
+.movies-card{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.movies-card__link{
+    text-decoration: none;
+}
+
+.movies-card__image{
+    width: 100%;
+    object-fit: cover;
+}
+
+.movies-card__info{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 10px 0 25px;
+    border-bottom: 1px solid #E8E8E8;
+}
+
+.movies-card__title{
+    width: 100%;
+    font-family: 'Inter', 'Arial', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;
+    color: #000000;
+    padding: 0;
+    margin: 0;
+}
+
+.movies-card__btn{
+    min-width: 24px;
+    height: 24px;
+    border: none;
+    border-radius: 50px;
+    padding: 0;
+    background: url('../../images/like-default.svg') #F9F9F9 no-repeat center;
+    box-sizing: border-box;
+    margin-left: 20px;
+    transition: .4s ease;
+}
+
+.movies-card__btn:hover{
+    cursor: pointer;
+    background: url('../../images/like-default.svg') #EE3465 no-repeat center;
+}
+
+.movies-card__btn_active{
+    background: url('../../images/like-active.svg') #F9F9F9 no-repeat center;
+}
+
+.movies-card__btn:hover{
+    cursor: pointer;
+}
+
+.movies-card__btn_delete{
+    background: none;
+    transition: .3s ease;
+}
+
+.movies-card__btn_delete:hover{
+    background: url('../../images/like-delete.svg') #F9F9F9 no-repeat center;
+}
+
+
+.movies-card__timing{
+    margin: 0;
+    padding: 6px 0 0;
+    font-family: 'Inter', 'Arial', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+    display: flex;
+    align-items: center;
+    color: #A0A0A0;
+}
+
+@media screen and (max-width: 475px) {
+    .movies-card__title{
+        font-size: 12px;
+        line-height: 15px;
+    }
+}

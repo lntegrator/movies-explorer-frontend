@@ -1,0 +1,138 @@
+.about-project{
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 110px 0;
+}
+
+.about-project__info{
+    margin: 70px 0 110px;
+    width: calc(100% - 70px * 2);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.about-project__info-subtitle{
+    margin: 0 0 26px 0;
+    padding: 0;
+    font-family: 'Inter', 'Arial', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: -0.04em;
+    color: #000000;
+}
+
+.about-project__info-text{
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', 'Arial', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.43;
+    color: #000000;
+}
+
+.about-project__periods{
+    width: calc(100% - 70px * 2);
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+}
+
+.about-project__period-week{
+    font-family: 'Inter', 'Arial', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #000000;
+    background-color: #2BE080;
+    text-align: center;
+    margin: 0;
+    padding: 9px 0;
+}
+
+.about-project__period-week_front{
+    background-color: #F2F2F2;
+}
+
+.about-project__period-info{
+    font-family: 'Inter', 'Arial', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.21;
+    text-align: center;
+    color: #A0A0A0;
+    margin: 14px 0 0;
+}
+
+@media screen and (max-width: 900px) {
+
+    .about-project{
+        padding: 90px 0;
+    }
+
+    .about-project__info{
+        width: calc(100% - 50px * 2);
+        gap: 30px;
+        margin: 70px 0 93px;
+    }
+    
+
+    .about-project__info-subtitle{
+        margin: 0 0 22px 0;
+    }
+
+    .about-project__periods{
+        width: calc(100% - 50px * 2);
+    }
+
+    .about-project__period-info{
+        margin: 14px 0 0;
+    }
+}
+
+@media screen and (max-width: 475px) {
+
+    .about-project{
+        padding: 70px 0;
+    }
+
+    .about-project__info{
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 56px;
+    }
+
+    .about-project__info{
+        margin: 60px 0 60px;
+        width: calc(100% - 18px * 2);
+    }
+
+    .about-project__info-subtitle{
+        margin: 0 0 16px 0;
+        font-size: 18px;
+        line-height: 22px;
+    }
+
+    .about-project__periods{
+        width: calc(100% - 18px * 2);
+    }
+
+    .about-project__period-week{
+        font-size: 11px;
+        line-height: 13px;
+    }
+
+    .about-project__period-info{
+        margin: 10px 0 0;
+    }
+    
+}

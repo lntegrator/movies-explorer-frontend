@@ -1,0 +1,27 @@
+.register{
+    padding: 70px 0 70px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    width: 396px;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+.register__title{
+    font-family: 'Inter', 'Arial', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 29px;
+    color: #000000;
+    margin: 0;
+    padding: 0;
+}
+
+@media screen and (max-width: 475px) {
+    .register{
+        align-items: center;
+        width: calc(100% - 30px * 2);
+    }
+}

@@ -1,0 +1,15 @@
+.burger-btn{
+    width: 44px;
+    height: 44px;
+    border: none;
+    background: url('../../images/menu.svg') center no-repeat;
+    cursor: pointer;
+    transition: .3s ease;
+    display: none;
+}
+
+@media screen and (max-width: 900px) {
+    .burger-btn{
+        display: block;
+    }
+}

@@ -1,0 +1,30 @@
+.more-button{
+    border: 1px solid #E8E8E8;
+    background: transparent;
+    font-family: 'Inter', 'Arial', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #000000;
+    border-radius: 4px;
+    width: 320px;
+    height: 36px;
+    cursor: pointer;
+    transition: .4s ease;
+    margin: 50px 0 80px;
+}
+
+.more-button:hover{
+    background: #E8E8E8;
+}
+
+@media screen and (max-width: 475px) {
+    .more-button{
+        width: 240px;
+    }
+}
