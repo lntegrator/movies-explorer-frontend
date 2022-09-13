@@ -10,6 +10,7 @@ function NavigationMobile({ isOpen, onClose }) {
                 <button
                     className="navigation-mobile__close-btn"
                     onClick={onClose}
+                    type="button"
                 />
                 <nav className="navigation-mobile__nav">
                     <NavLink exact to="/" className="navigation__link" activeClassName="navigation-mobile__active">Главная</NavLink>

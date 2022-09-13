@@ -31,8 +31,8 @@ function ProfileForm(){
                 </fieldset>
             </div>
             <div className="profile-form__buttons">
-                <button className="profile-form__button">Редактировать</button>
-                <button className="profile-form__button profile-form__button_red">Выйти из аккаунта</button>
+                <button className="profile-form__button" type="button">Редактировать</button>
+                <button className="profile-form__button profile-form__button_red" type="button">Выйти из аккаунта</button>
             </div>
         </form>
     )

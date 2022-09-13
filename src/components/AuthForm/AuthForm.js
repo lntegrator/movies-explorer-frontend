@@ -44,10 +44,10 @@ function AuthForm({ formType, buttonText, text, linkText, link }){
             </fieldset>
 
             <div className="auth-form__btns">
-                <button className="auth-form__btn">{buttonText}</button>
+                <button className="auth-form__btn" type="">{buttonText}</button>
                 <p className="auth-form__link-text">
                     {text}
-                    <Link to={link} className="auth-form__link">{linkText}</Link>
+                    <Link to={link} className="auth-form__link" type="button">{linkText}</Link>
                 </p>
             </div>
 

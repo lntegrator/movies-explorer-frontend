@@ -35,6 +35,7 @@
     margin: 20px 0 0;
     padding: 0;
     border-bottom: 1px solid #E6E6E6;
+    text-decoration: none;
 }
 
 .portfolio__link:first-of-type{

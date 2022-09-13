@@ -11,8 +11,9 @@ function SearchForm(){
                     <input
                         className="search__input"
                         placeholder="Фильм"
+                        required
                     />
-                    <button className="search__button"><img src={icon} alt='Иконка'/></button>
+                    <button className="search__button" type="button"><img src={icon} alt='Иконка'/></button>
                 </div>
                 <FilterCheckbox />
             </form>
