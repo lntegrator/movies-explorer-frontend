@@ -1,0 +1,33 @@
+.header{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.header__container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 21px 0;
+    width: calc(100% - 70px * 2);
+}
+
+.header_main{
+    background-color: #465DFF;
+}
+
+@media screen and (max-width: 900px) {
+    .header__container{
+        width: calc(100% - 30px * 2);
+    }
+}
+
+@media screen and (max-width: 475px) {
+    .header__container{
+        width: calc(100% - 14px * 2);
+    }
+}
+
+.header__logo{
+    height: 38px;
+}

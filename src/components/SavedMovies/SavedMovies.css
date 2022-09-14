@@ -1,0 +1,11 @@
+.saved-movies{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.saved-movies__devider{
+    width: 100%;
+    height: 140px;
+}
