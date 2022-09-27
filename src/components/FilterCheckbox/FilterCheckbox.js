@@ -1,7 +1,7 @@
 import React from "react";
 import './FilterCheckbox.css';
 
-function FilterCheckbox() {
+function FilterCheckbox({ setShort, isShort }) {
     return(
         <div className="filter-checkbox">
             <label className="filter-checkbox__text">
@@ -10,6 +10,8 @@ function FilterCheckbox() {
                 className="filter-checkbox__check"
                 type="checkbox"
                 name="movie-checkbox"
+                defaultChecked={isShort}
+                onChange={setShort}
                 />
                 <span className="filter-checkbox__toggle" />
             </label>
