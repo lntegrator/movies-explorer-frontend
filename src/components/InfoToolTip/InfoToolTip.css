@@ -1,0 +1,49 @@
+.infoToolTip{
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    display: flex;
+    flex-direction: row;
+    opacity: 0;
+    transition: .4s ease-in-out;
+    background: #fff;
+    /* outline: 1px solid rgb(198, 198, 198); */
+    border-radius: 8px;
+    box-sizing: border-box;
+    gap: 10px;
+    padding: 10px 15px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.04), 0px 2px 6px rgba(0, 0, 0, 0.04), 0px 0px 1px rgba(0, 0, 0, 0.04);
+    max-width: 310px;
+}
+
+.infoToolTip__active{
+    opacity: 1;
+}
+
+.infoToolTip__text{
+    font-family: 'Inter', 'Arial', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.23;
+    display: flex;
+    align-items: center;
+    color: #000000;
+    transition: .3s;
+}
+
+.infoToolTip__close-btn{
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: url('../../images/close-icon.svg') center;
+    width: 12px;
+    height: 12px;
+    border: none;
+    cursor: pointer;
+    transition: .4s ease-in-out;
+}
+
+.infoToolTip__close-btn:hover{
+    opacity: .6;
+}

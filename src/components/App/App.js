@@ -14,7 +14,7 @@ import NotFound from '../NotFound/NotFound';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import { currentUserContext } from '../../contexts/currentUserContext';
 import mainApi from '../../utils/MainApi';
-import moviesApi from '../../utils/MoviesApi';
+import InfoToolTip from '../InfoToolTip/InfoToolTip';
 
 function App() {
 
@@ -32,22 +32,22 @@ function App() {
   // Сохраненные карточки
   const [savedMovies, setSavedMovies] = useState([]);
 
-   // Проверяем авторизацию
-   useEffect(() => {
-    if (loggedIn) {
-      mainApi
-        .checkToken(localStorage.getItem('jwt'))
-        .then((res) => {
-          setCurrentUser(res);
-        })
-        .catch((err) => console.log(err));
-    }
-  }, [loggedIn]);
+  // Стейт попапа уведомления
+  const [isInfoToolTipOpen, setInfoToolTipOpen] = useState(false);
+
+  // Стейт информации в попапе уведомления
+  const [infoToolTipInformation, setInfoToolTipInformation] = useState({});
+
+  // Функция показа попапа уведомления
+  const handleInfoToolTip = (message, isGood) => {
+    setInfoToolTipInformation({ message, isGood });
+    setInfoToolTipOpen(true);
+  }
 
   // Проверяем токен при посещении
   useEffect(() => {
     handleTokenCheck();
-  }, [loggedIn, savedMovies])
+  }, [])
 
   // Функция изменения стейта открытия мобильного меню
   const handleOpenMobileMenu = () => {
@@ -57,6 +57,12 @@ function App() {
   // Функция закрытия мобильного меню
   const handleCloseMobileMenu = () => {
     setOpenMobileMenu(false);
+  }
+ 
+  // Закрытие инофрмационного попапа
+  const handleCloseInfoToolTip = () => {
+    setInfoToolTipOpen(false);
+    setInfoToolTipInformation({});
   }
 
   // Функция закрытия мобильного меню по нажатию ESC
@@ -76,7 +82,8 @@ function App() {
         setCurrentUser(res);
       })
       .catch((err) => {
-        console.log(err)
+        handleInfoToolTip(`Ошибка ${err.message}`, false);
+        handleSignOut();
       })
     }
   }
@@ -88,8 +95,8 @@ function App() {
       setCurrentUser(res);
       handleLogin({email, password})
     })
-    .catch(() => {
-      console.log('Ошибка')
+    .catch((err) => {
+      handleInfoToolTip(`Ошибка ${err.message}`, false);
     })
   }
 
@@ -98,27 +105,18 @@ function App() {
     mainApi.auth(email, password)
     .then((res) => {
       localStorage.setItem('jwt', res.token);
-      mainApi.checkToken(res.token)
-      .then((res) => {
-        setLoggedIn(true);
-        setCurrentUser(res);
-        history.push('/movies');
-      })
-      .catch(() => {
-        console.log('Ошибка')
-      })
+      handleTokenCheck(res.token);
+      history.push('/movies');
+    })
+    .catch((err) => {
+      handleInfoToolTip(`Ошибка ${err.message}`, false);
     })
   }
 
   // Выход из аккаунта
   function handleSignOut(){
     setLoggedIn(false);
-    localStorage.removeItem('jwt');
-    localStorage.removeItem('filteredMovies');
-    localStorage.removeItem('toggle');
-    localStorage.removeItem('request');
-    localStorage.removeItem('toggleShort');
-    localStorage.removeItem('savedMovies');
+    localStorage.clear();
     history.push('/');
   }
 
@@ -126,35 +124,39 @@ function App() {
   function handleProfileUpdate({ name, email }){
     mainApi.profileUpdate(name, email)
     .then((res) => {
-      console.log(res)
       setCurrentUser(res);
+      handleInfoToolTip('Профиль успешно обновлен', true)
     })
     .catch((err) => {
-      console.log(err)
+      handleInfoToolTip(`Ошибка ${err.message}`, false);
     })
   }
 
-  function getMovies(){
+  // Функция получения сохраненных фильмов
+  function getSavedMovies(){
     mainApi.getSavedMovies()
       .then((res) => {
         setSavedMovies(res);
-        // console.log(res)
         localStorage.setItem('savedMovies', JSON.stringify(res));
-        // console.log(JSON.parse(localStorage.getItem('savedMovies')));
       })
       .catch((err) => {
-        console.log(err);
       })
   }
 
   // Сохранение фильма
   function handleSaveMovie(movie){
+    const Reg = /^(https?:\/\/)?([\w-]{1,32}\.[\w-]{1,32})[^\s@]*/;
+    
+    if(!Reg.test(movie.trailerLink)){
+      movie.trailerLink = 'https://youtube.com/'
+    }
+
     mainApi.saveMovie(movie)
     .then((savedMovie) => {
-      getMovies()
+      getSavedMovies()
     })
     .catch((err) => {
-      console.log(err);
+      handleInfoToolTip(`Ошибка ${err.message}`, false);
     })
   }
 
@@ -165,37 +167,14 @@ function App() {
     .then(setSavedMovies((state) => {state.filter((movie) => movie._id !== id)})
     )
     .catch((err) => {
-      console.log(err);
+      handleInfoToolTip(`Ошибка ${err.message}`, false);
     })
   }
-
-  // Подгружаем массив карточек со стороннего сервиса
-  useEffect(() => {
-    if(loggedIn){
-      moviesApi.getCards()
-        .then((res) => {
-          localStorage.setItem('movies', JSON.stringify(res));
-          // console.log(localStorage.getItem('movies'))
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-    }
-  }, [loggedIn])
 
   // Подгружаем сохраненные карточки
   useEffect(() => {
     if(loggedIn){
-      // getMovies();
-      // mainApi.getSavedMovies()
-      // .then((res) => {
-      //   console.log(res)
-      //   // setSavedMovies(res);
-      //   // localStorage.setItem('savedMovies', JSON.stringify(res));
-      // })
-      // .catch((err) => {
-      //   console.log(err);
-      // })
+      getSavedMovies();
     }
   }, [loggedIn])
 
@@ -208,8 +187,9 @@ function App() {
   });
 
   useEffect(() => {
-    localStorage.setItem('toggle', false)
-  })
+    setCurrentUser(currentUser);
+  }, [currentUser])
+
 
   return (
     <currentUserContext.Provider value={currentUser}>
@@ -224,6 +204,11 @@ function App() {
             <Main />
             <Footer/>
           </Route>
+          {/* <ProtectedRoute path="/signup" type='auth'>
+            <Register
+                onSubmit={handleRegister}
+              />
+          </ProtectedRoute> */}
           <Route path="/signup">
             <Register
               onSubmit={handleRegister}
@@ -234,7 +219,12 @@ function App() {
               onSubmit={handleLogin}
             />
           </Route>
-          <ProtectedRoute path="/movies" loggedIn={loggedIn}>
+          {/* <ProtectedRoute path='/signin' type='auth'>
+            <Login
+                onSubmit={handleLogin}
+              /> 
+          </ProtectedRoute> */}
+          <ProtectedRoute path="/movies">
             <Header
                 page="movies"
                 onBurger={handleOpenMobileMenu}
@@ -243,10 +233,11 @@ function App() {
               <Movies
                 handleSaveMovie={handleSaveMovie}
                 handleDeleteMovie={handleDeleteMovie}
+                handleInfoToolTip={handleInfoToolTip}
               />
               <Footer />
           </ProtectedRoute>
-          <ProtectedRoute path="/saved-movies" loggedIn={loggedIn}>
+          <ProtectedRoute path="/saved-movies">
             <Header
               onBurger={handleOpenMobileMenu}
               loggedIn={loggedIn}
@@ -258,7 +249,7 @@ function App() {
             />
             <Footer />
           </ProtectedRoute>
-          <ProtectedRoute path="/profile" loggedIn={loggedIn}>
+          <ProtectedRoute path="/profile">
             <Header
               onBurger={handleOpenMobileMenu}
               loggedIn={loggedIn}
@@ -275,6 +266,11 @@ function App() {
         <NavigationMobile
           isOpen={isOpenMobileMenu}
           onClose={handleCloseMobileMenu}
+        />
+        <InfoToolTip
+          isOpen={isInfoToolTipOpen}
+          onClose={handleCloseInfoToolTip}
+          info={infoToolTipInformation}
         />
       </div>
     </currentUserContext.Provider>

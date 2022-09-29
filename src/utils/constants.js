@@ -3,6 +3,14 @@ export const MAIN_API_URL = 'https://api.webdiploma.nomoredomains.sbs';
 export const SHORT_MOVIE_TIMING = 40;
 export const IMAGES_BASE_URL = 'https://api.nomoreparties.co';
 
+export const CARDS_VIEW = {
+    size1570: { point: 1570, initial: 20, add: 5 },
+    size1280: { point: 1280, initial: 16, add: 4 },
+    size990: { point: 990, initial: 12, add: 3 }, 
+    size768: { point: 768, initial: 8, add: 2 },
+    size320: { point: 475, initial: 5, add: 2 }
+};
+
 // Массив отфильтрованных фильмов
 let filteredMovies = [];
 
@@ -10,7 +18,6 @@ let filteredMovies = [];
 export const filterMovies = (request, isShort, allMovies, setLoading, setError, page) => {
     filteredMovies = [];
     setLoading(true);
-    console.log(allMovies)
     allMovies.filter(function(movie) {
         const nameRu = movie.nameRU.toLowerCase();
         const nameEn = movie.nameEN.toLowerCase();
@@ -50,6 +57,7 @@ export const filterMovies = (request, isShort, allMovies, setLoading, setError, 
     }
 
     if (page==='Movies'){
+        // console.log(filteredMovies)
         return localStorage.setItem('filteredMovies', JSON.stringify(filteredMovies));
     } else {
         return localStorage.setItem('filteredSavedMovies', JSON.stringify(filteredMovies));

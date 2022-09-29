@@ -37,7 +37,7 @@ function SearchForm({ isShort, filterMovies, searchError, setShort, page }){
 
     useEffect(() => {
         setRequest(request);
-    }, [request, isShort, setShort])
+    }, [request])
 
     return(
         <section className="search">

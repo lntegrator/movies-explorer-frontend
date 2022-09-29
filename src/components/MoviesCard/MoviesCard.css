@@ -72,6 +72,10 @@
     background: url('../../images/like-delete.svg') #F9F9F9 no-repeat center;
 }
 
+.movies-card:hover .movies-card__btn_delete{
+    background: url('../../images/like-delete.svg') #F9F9F9 no-repeat center;
+}
+
 
 .movies-card__timing{
     margin: 0;
@@ -84,6 +88,12 @@
     display: flex;
     align-items: center;
     color: #A0A0A0;
+}
+
+@media screen and (max-width: 990px) {
+    .movies-card__btn_delete{
+        background: url('../../images/like-delete.svg') #F9F9F9 no-repeat center;
+    }
 }
 
 @media screen and (max-width: 475px) {

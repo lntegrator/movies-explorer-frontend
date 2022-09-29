@@ -7,29 +7,26 @@ import Preloader from "../Preloader/Preloader";
 import { useEffect } from "react";
 import { filterMovies } from "../../utils/constants";
 import mainApi from "../../utils/MainApi";
+import moviesApi from "../../utils/MoviesApi";
 
-function Movies({ handleSaveMovie }){
+function Movies({ handleSaveMovie, handleInfoToolTip }){
 
     // Стейт тоггла
     const [isShort, setShort] = useState(JSON.parse(localStorage.getItem('toggle')));
-
-    // Достаем все фильмы
-    const [allMovies, setAllMovies] = useState(JSON.parse(localStorage.getItem('movies')));
-    // console.log(JSON.parse(localStorage.getItem('movies')));
-    console.log(allMovies)
-
-    const [buttonClass, setButtonClass] = useState('movies-card__btn');
+    
 
     // Функция переключения тоггла
     function handleChangeToggle(){
         if (isShort){
+            console.log('vxod')
             setShort(false);
             localStorage.setItem('toggle', JSON.stringify(false));
-            return handleFilterMovies(localStorage.getItem('request'), JSON.parse(localStorage.getItem('toggle')));
+            return handleFilterMovies(localStorage.getItem('request'), false);
         } else {
+            console.log('vxod2')
             setShort(true);
             localStorage.setItem('toggle', JSON.stringify(true));
-            return handleFilterMovies(localStorage.getItem('request'), JSON.parse(localStorage.getItem('toggle')));
+            return handleFilterMovies(localStorage.getItem('request'), true);
         }
     }
 
@@ -42,11 +39,12 @@ function Movies({ handleSaveMovie }){
               localStorage.setItem('savedMovies', JSON.stringify(res));
             })
             .catch((err) => {
-              console.log(err);
-            })        }
+                handleInfoToolTip(`Ошибка ${err.message}`, false);
+            })        
+        }
         )
         .catch((err) => {
-        console.log(err);
+            handleInfoToolTip(`Ошибка ${err.message}`, false);
         })
     }
 
@@ -62,31 +60,32 @@ function Movies({ handleSaveMovie }){
     const page='Movies';
 
     // Функция фильтрации карточек
-    function handleFilterMovies(request, isShort){
-        console.log(allMovies)
-        filterMovies(request, isShort, allMovies, setLoading, setError, page);
-        setCards(JSON.parse(localStorage.getItem('filteredMovies')));
-        return
+    function handleFilterMovies(request, isShort){   
+
+        const allMovies = JSON.parse(localStorage.getItem('movies'));
+
+        if (allMovies){
+            filterMovies(request, isShort, allMovies, setLoading, setError, page);
+            setCards(JSON.parse(localStorage.getItem('filteredMovies')));
+            return localStorage.setItem('toggle', isShort);
+        }
+        moviesApi.getCards()
+        .then((res) => {
+          localStorage.setItem('movies', JSON.stringify(res));
+          filterMovies(request, isShort, res, setLoading, setError, page);
+          setCards(JSON.parse(localStorage.getItem('filteredMovies')));
+          return localStorage.setItem('toggle', isShort);
+
+        })
+        .catch((err) => {
+            handleInfoToolTip(`Ошибка ${err.message}`, false);
+        })
     }
 
-    function handleChangeButton(isSaved){
-        console.log(isSaved)
-        if (isSaved){
-            console.log('удаляем сохранение')
-            console.log(buttonClass)
-            return setButtonClass('movies-card__btn');
-        }
-        console.log('добавляем сохранение')
-        return setButtonClass('movies-card__btn movies-card__btn_active')
-   }
-
     useEffect(() => {
-        setLoading(isLoading);
-    }, [allMovies, cards, isLoading, isShort, setShort]);
-
-    useEffect(() => {
-        setAllMovies(JSON.parse(localStorage.getItem('movies')));
-    }, [allMovies])
+        setCards(cards);
+        localStorage.setItem('toggle', JSON.stringify(isShort));
+    }, [cards, isShort]);
 
     return(
         <main className="movies-page">
@@ -104,9 +103,7 @@ function Movies({ handleSaveMovie }){
                 isButtonVisible={true}
                 handleSaveMovie={handleSaveMovie}
                 handleDeleteMovie={handleDeleteMovie}
-                handleChangeButton={handleChangeButton}
                 page={'movies'}
-                buttonClass={buttonClass}
             />
         </main>
     )

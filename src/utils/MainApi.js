@@ -109,7 +109,7 @@ class MainApi {
                 year: year || " ",
                 description: description || " ",
                 image: `${IMAGES_BASE_URL}${image.url}` || " ",
-                trailerLink: trailerLink,
+                trailerLink: trailerLink || " ",
                 nameRU: nameRU || " ",
                 nameEN: nameEN || " ",
                 thumbnail:

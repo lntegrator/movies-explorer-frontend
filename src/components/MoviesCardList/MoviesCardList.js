@@ -4,8 +4,9 @@ import MoviesCard from "../MoviesCard/MoviesCard";
 import './MoviesCardList.css';
 import { useState } from "react";
 import { useEffect } from "react";
+import { CARDS_VIEW } from "../../utils/constants";
 
-function MoviesCardList({ cards, isButtonVisible, handleSaveMovie, handleDeleteMovie, page, handleChangeButton, buttonClass}){
+function MoviesCardList({ cards, isButtonVisible, handleSaveMovie, handleDeleteMovie, page }){
 
     // Стейт количества карточек для подгрузки
     const [cardsNumber, setCardsNumber] = useState(0);
@@ -22,14 +23,32 @@ function MoviesCardList({ cards, isButtonVisible, handleSaveMovie, handleDeleteM
 
     // Функция подгрузки карточек в зависимости от экрана
     function handleAddCards(){
-        const addCardsNumber = displaySize >= 1280 ? 4 : 2
+        const addCardsNumber =
+             displaySize >= CARDS_VIEW.size1570.point
+             ? CARDS_VIEW.size1570.add
+             : displaySize >=CARDS_VIEW.size1280.point
+             ? CARDS_VIEW.size1280.add
+             : displaySize >= CARDS_VIEW.size990.point
+             ? CARDS_VIEW.size990.add
+             : displaySize >= CARDS_VIEW.size768.point
+             ? CARDS_VIEW.size768.add
+             : CARDS_VIEW.size320.add
         setCardsNumber(cardsNumber + addCardsNumber);
     }
 
     useEffect(() => {
         setDisplaySize(document.documentElement.clientWidth);
+
         setCardsNumber(
-            displaySize >= 1280 ? 16 : displaySize >= 768 ? 8 : 5
+            displaySize >= CARDS_VIEW.size1570.point
+             ? CARDS_VIEW.size1570.initial
+             : displaySize >=CARDS_VIEW.size1280.point
+             ? CARDS_VIEW.size1280.initial
+             : displaySize >= CARDS_VIEW.size990.point
+             ? CARDS_VIEW.size990.initial
+             : displaySize >= CARDS_VIEW.size768.point
+             ? CARDS_VIEW.size768.initial
+             : CARDS_VIEW.size320.initial
         );
         
         window.addEventListener("resize", handleDislpayResize);
@@ -52,8 +71,6 @@ function MoviesCardList({ cards, isButtonVisible, handleSaveMovie, handleDeleteM
                             handleSaveMovie={handleSaveMovie}
                             handleDeleteMovie={handleDeleteMovie}
                             page={page}
-                            handleChangeButton={handleChangeButton}
-                            buttonClass={buttonClass}
                         />
                     ))}
                 </div>
