@@ -1,5 +1,5 @@
 import './App.css';
-import { Route, Switch, useHistory } from 'react-router-dom';
+import { Route, Switch, useHistory, Redirect } from 'react-router-dom';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Main from '../Main/Main';
@@ -153,7 +153,8 @@ function App() {
 
     mainApi.saveMovie(movie)
     .then((savedMovie) => {
-      getSavedMovies()
+      savedMovies.push(savedMovie);
+      localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
     })
     .catch((err) => {
       handleInfoToolTip(`Ошибка ${err.message}`, false);
@@ -162,7 +163,6 @@ function App() {
 
   // Удаление фильма 
   function handleDeleteMovie(id){
-    console.log(id)
     mainApi.deleteMovie(id)
     .then(setSavedMovies((state) => {state.filter((movie) => movie._id !== id)})
     )
@@ -190,7 +190,6 @@ function App() {
     setCurrentUser(currentUser);
   }, [currentUser])
 
-
   return (
     <currentUserContext.Provider value={currentUser}>
       <div className="App">
@@ -204,26 +203,21 @@ function App() {
             <Main />
             <Footer/>
           </Route>
-          {/* <ProtectedRoute path="/signup" type='auth'>
-            <Register
-                onSubmit={handleRegister}
-              />
-          </ProtectedRoute> */}
           <Route path="/signup">
-            <Register
+          {() => (!loggedIn 
+          ? <Register
               onSubmit={handleRegister}
             />
+            : <Redirect to="/" />)}
           </Route>
           <Route path='/signin'>
-            <Login
+            {() => (!loggedIn
+            ? <Login
               onSubmit={handleLogin}
             />
+            : <Redirect to="/"
+            />)}
           </Route>
-          {/* <ProtectedRoute path='/signin' type='auth'>
-            <Login
-                onSubmit={handleLogin}
-              /> 
-          </ProtectedRoute> */}
           <ProtectedRoute path="/movies">
             <Header
                 page="movies"

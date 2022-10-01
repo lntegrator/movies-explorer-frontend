@@ -18,7 +18,7 @@ function MoviesCardList({ cards, isButtonVisible, handleSaveMovie, handleDeleteM
     function handleDislpayResize(){
         setTimeout(() => {
             setDisplaySize(document.documentElement.clientWidth)
-        }, 5000)
+        }, 500)
     }
 
     // Функция подгрузки карточек в зависимости от экрана

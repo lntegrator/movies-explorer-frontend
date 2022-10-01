@@ -94,6 +94,7 @@ function Movies({ handleSaveMovie, handleInfoToolTip }){
                 filterMovies={handleFilterMovies}
                 isShort={isShort}
                 searchError={error}
+                page='movies'
             />
             <Preloader
                 isOn = {isLoading}
@@ -103,6 +104,7 @@ function Movies({ handleSaveMovie, handleInfoToolTip }){
                 isButtonVisible={true}
                 handleSaveMovie={handleSaveMovie}
                 handleDeleteMovie={handleDeleteMovie}
+                handleInfoToolTip={handleInfoToolTip}
                 page={'movies'}
             />
         </main>

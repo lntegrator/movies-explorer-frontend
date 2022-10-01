@@ -26,7 +26,6 @@ function ProfileForm({ onSignOut, onSubmit }){
     // Фунция сохранения данных
     function handleProfileSubmit(e){
         e.preventDefault();
-        console.log(values.name)
         if ((values.name !== currentUser.name) || (values.email !== currentUser.email)){
             setDisabled(true);
             onSubmit({ name: values.name, email: values.email });

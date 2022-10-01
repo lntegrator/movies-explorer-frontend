@@ -23,7 +23,9 @@ function SearchForm({ isShort, filterMovies, searchError, setShort, page }){
     function handleSubmit(e){
         e.preventDefault();
         if (request){
-            localStorage.setItem('request', request);
+            if (page==='movies'){
+                localStorage.setItem('request', request);
+            }
             filterMovies(request, isShort, allMovies);
             return setError('');
         }

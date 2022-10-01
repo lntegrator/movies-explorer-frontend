@@ -3,12 +3,31 @@ import "./MoviesCard.css";
 import { IMAGES_BASE_URL } from "../../utils/constants";
 import { useState } from "react";
 import { useEffect } from "react";
+import mainApi from "../../utils/MainApi";
 
-function MoviesCard( { card, handleSaveMovie, handleDeleteMovie, page }){
+function MoviesCard( { card, handleInfoToolTip, handleDeleteMovie, page }){
 
     const [savedMovies, setSavedMovies] = useState(JSON.parse(localStorage.getItem('savedMovies')));
     const [isSaved, setSaved] = useState(savedMovies && savedMovies.find(movie => movie.nameRU === card.nameRU) ? true : false)
     const imgUrl = page==='movies' ? `${IMAGES_BASE_URL}${card.image.url}` : card.image;
+
+    function handleSaveMovie(movie){
+        const Reg = /^(https?:\/\/)?([\w-]{1,32}\.[\w-]{1,32})[^\s@]*/;
+        
+        if(!Reg.test(movie.trailerLink)){
+          movie.trailerLink = 'https://youtube.com/'
+        }
+    
+        mainApi.saveMovie(movie)
+        .then((savedMovie) => {
+          savedMovies.push(savedMovie);
+          localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
+          setSaved(true);
+        })
+        .catch((err) => {
+            handleInfoToolTip(`Ошибка ${err.message}`, false);
+        })
+      }
 
     function cardClick(){
         if (isSaved) {
@@ -21,8 +40,7 @@ function MoviesCard( { card, handleSaveMovie, handleDeleteMovie, page }){
             handleDeleteMovie(movieId);
             return setSaved(false);
         }
-        setSaved(true);
-        return handleSaveMovie(card);
+        return handleSaveMovie(card)
     }
 
     const duration = (minutes) => {
