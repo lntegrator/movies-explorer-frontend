@@ -42,6 +42,8 @@
 
 .not-found__backlink{
     position: absolute;
+    background-color: transparent;
+    border: none;
     bottom: 60px;
     font-family: 'Inter', 'Arial', sans-serif;
     font-style: normal;

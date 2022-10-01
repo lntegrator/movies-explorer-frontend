@@ -32,7 +32,7 @@
 
 .filter-checkbox__toggle{
     position: absolute;
-    background-color: #2BE080;
+    background-color: #A0A0A0;
     width: 36px;
     height: 20px;
     border-radius: 20px;
@@ -45,7 +45,7 @@
     content: "";
     position: absolute;
     top: 2px;
-    right: 2px;
+    left: 2px;
     width: 16px;
     height: 16px;
     border-radius: 50px;
@@ -55,11 +55,11 @@
 }
 
 .filter-checkbox__check:checked + .filter-checkbox__toggle{
-    background-color: #A0A0A0;
+    background-color: #2BE080;
 }
 
 .filter-checkbox__check:checked + .filter-checkbox__toggle::after{
-    left: 2px;
+    left: 18px;
     transition: .3s ease;
 }
 

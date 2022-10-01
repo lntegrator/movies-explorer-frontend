@@ -13,11 +13,13 @@ function NavigationMobile({ isOpen, onClose }) {
                     type="button"
                 />
                 <nav className="navigation-mobile__nav">
-                    <NavLink exact to="/" className="navigation__link" activeClassName="navigation-mobile__active">Главная</NavLink>
-                    <NavLink to="/movies" className="navigation__link" activeClassName="navigation-mobile__active">Фильмы</NavLink>
-                    <NavLink to="/saved-movies" className="navigation__link" activeClassName="navigation-mobile__active">Сохраненные фильмы</NavLink>
+                    <NavLink exact to="/" className="navigation__link" activeClassName="navigation-mobile__active" onClick={onClose}>Главная</NavLink>
+                    <NavLink to="/movies" className="navigation__link" activeClassName="navigation-mobile__active" onClick={onClose}>Фильмы</NavLink>
+                    <NavLink to="/saved-movies" className="navigation__link" activeClassName="navigation-mobile__active" onClick={onClose}>Сохраненные фильмы</NavLink>
                 </nav>
-                <ProfileButton />
+                <ProfileButton
+                    onClick={onClose}
+                />
             </div>
             <div className="navigation-mobile__cover" onClick={onClose}></div>
         </div>

@@ -79,6 +79,17 @@
     outline: none;
 }
 
+.profile-form__error{
+    font-family: 'Inter', 'Arial', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 12px;
+    color: #EE3465;
+    margin: 10px 0 0;
+    padding: 0;
+}
+
 .profile-form__devider{
     width: 100%;
     height: 1px;
@@ -116,6 +127,11 @@
 
 .profile-form__button:hover{
     opacity: .6;
+}
+
+.profile-form__button:disabled{
+    color: #A0A0A0;
+    cursor: default;
 }
 
 @media screen and (max-width: 900px) {
